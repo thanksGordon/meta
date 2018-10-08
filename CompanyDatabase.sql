@@ -1,6 +1,15 @@
-DROP DATABASE metablurProject;
+
+
+drop database metablurProject;
 CREATE DATABASE metablurProject;
 USE metablurProject;
+
+CREATE Table Department (
+DptID int not null primary key AUTO_INCREMENT,
+Dname varchar(45)
+/*headID mediumint references Employee(EmployeeID)*/
+);
+
 CREATE TABLE Employee(
 	EmployeeID mediumint PRIMARY KEY AUTO_INCREMENT,
     fname VARCHAR (30),
@@ -8,27 +17,20 @@ CREATE TABLE Employee(
     Address VARCHAR(40),
     NIN VARCHAR(9),
     IBAN VARCHAR(34),
-    StartingSalary float
+    StartingSalary float,
+    DepartmentID int references Department(DptID)
   /*  DepartmentID int references Department(DptID) */
 );
 
-DROP TABLE Department;
-CREATE Table Department (
-DptID int not null primary key AUTO_INCREMENT,
-Dname varchar(45)
-/*headID mediumint references Employee(EmployeeID)*/
-);
-ALTER TABLE Employee ADD DepartmentID int references Department(DptID);
-alter table EmployeeSales(
-add column DepartmentID int references Department(DptID)); 
-DROP TABLE EmpSales;
+
 Create table EmpSales (
 Month datetime not null default NOW() ,
 EmpID mediumint not null references Employee(EmployeeID),
 TotalSales float DEFAULT 0,
+DepartmentID int references Department(DptID),
 primary key (Month, EmpID)
 );
-DROP TABLE Project;
+
 CREATE TABLE Project(
 ProjID Smallint primary key not null AUTO_INCREMENT,
 ProjectName varchar(45) not null,
@@ -36,15 +38,15 @@ LeaderID mediumint references Employee(EmployeeID),
 Budget float ,
 Deadline datetime default Now()
 );
-DROP TABLE Teams;
+
 CREATE TABLE Teams(
-ProjID int not null references Project(ProjID)
-EmpID mediumint not null references Employee(EmployeeID)
+ProjID int not null references Project(ProjID),
+EmpID mediumint not null references Employee(EmployeeID),
 primary key(ProjID, EmpID)
 );
 /* inserting first user */
 insert into Employee(fname, lname, Address, NIN, IBAN, StartingSalary,DepartmentID) values ('Gordon', 'Kelly', 'Isnt Here', 'PG231569D', 'GB12 ABCD 123456 12345678', 2000.00,1);
-insert into Department(DptID, Dname) values (1,'Java division',1);
+insert into Department(DptID, Dname) values (1,'Java division');
 Insert into Project(ProjID,ProjectName,LeaderID,Budget) values (1,'Java based database', 1,900000.50);
 insert into Teams(EmpID, ProjID) values (1,1);
 /* Second user */
