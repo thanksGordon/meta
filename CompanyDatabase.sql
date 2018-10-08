@@ -28,6 +28,7 @@ Month datetime not null default NOW() ,
 EmpID mediumint not null references Employee(EmployeeID),
 TotalSales float DEFAULT 0,
 DepartmentID int references Department(DptID),
+ComRate float not null,
 primary key (Month, EmpID)
 );
 
