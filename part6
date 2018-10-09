@@ -1,0 +1,50 @@
+public void addEmployeeToProject(String sQLUsername, String sQLPassword)
+	{
+		Class driver = Class.forName("com.mysql.jdbc.Driver");
+		Connection c = DriverManager.getConnection("jdbc:mysql://localhost/metablurProject?useSSL=false",sQLUsername, sQLPassword);
+		Statement st = c.createStatement();
+		boolean moreEmployee = true;
+		while(moreEmployee=true)
+		{
+			System.out.println("Add employee ID");
+			int addEmployeeID = scanner.nextLine();
+			System.out.println("Add project ID");
+			int addProjID = scanner.nextLine();
+			ResultSet ry = st.executeQuery("insert into Teams(EmpID, ProjID) values ("+addEmployeeID+", "+addProjID+");");
+			System.out.println("Would you like to add another employee? (y/n)");
+			moreEmployee = scanner.nextLine();
+		}
+	}
+
+
+
+public static void UserStory6(String sQLUsername, String sQLPassword)
+	{
+		Class driver = Class.forName("com.mysql.jdbc.Driver");
+		Connection c = DriverManager.getConnection("jdbc:mysql://localhost/metablurProject?useSSL=false",sQLUsername, sQLPassword);
+		Statement st = c.createStatement();
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Insert Project Name");
+		String projectName = scanner.nextLine();
+		System.out.println("Insert Leader ID");
+		String leaderID = scanner.nextLine();
+		System.out.println("Insert Budget");
+		String budget = scanner.nextLine();
+		
+		ResultSet rs = st.executeQuery("Insert into Project(ProjectName,LeaderID,Budget) values ("+projectName+", "+ leaderID+", "+ budget+");");
+		int projID = st.executeQuery("Select Max ProjID From Project");
+		System.out.println("Would you like to add an employee? (y/n)");
+		boolean addEmployee = scanner.nextLine();
+		if(addEmployee = true)
+		{
+			boolean moreEmployee = true;
+			while(moreEmployee=true)
+			{
+				System.out.println("Add employee ID");
+				int addEmployeeID = scanner.nextLine();
+				ResultSet ry = st.executeQuery("insert into Teams(EmpID, ProjID) values ("+addEmployeeID+", "+projID+");");
+				System.out.println("Would you like to add another employee? (y/n)");
+				moreEmployee = scanner.nextLine();
+			}
+		}
+	}
